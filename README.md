@@ -14,7 +14,7 @@ Freya requires .NET 3.5 or later.
 Installation
 ------------
 
-One way to install Freya is download the latest package from master branch on github.
-The downloaded package includes required libraries. 
+One way to install Freya is download the latest package from master branch and compile it myself.
+
 
 Next way is wait to stable version.
