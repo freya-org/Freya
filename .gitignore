@@ -28,4 +28,4 @@ _ReSharper*/
 *.vssscc
 $tf*/
 .tfignore
-/packages
+/Freya/packages
