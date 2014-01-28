@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freya", "Freya\Freya.csproj", "{1261C566-2A1F-4900-9B36-6F8C6A203136}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tests", "tests\tests.csproj", "{B38F5B13-B3EA-4D2D-A24B-DC11C651338F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{1261C566-2A1F-4900-9B36-6F8C6A203136}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1261C566-2A1F-4900-9B36-6F8C6A203136}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1261C566-2A1F-4900-9B36-6F8C6A203136}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B38F5B13-B3EA-4D2D-A24B-DC11C651338F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B38F5B13-B3EA-4D2D-A24B-DC11C651338F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B38F5B13-B3EA-4D2D-A24B-DC11C651338F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B38F5B13-B3EA-4D2D-A24B-DC11C651338F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
