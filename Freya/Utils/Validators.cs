@@ -30,7 +30,7 @@ namespace Freya.Utils
             }
         }
 
-        internal static void ValidateEnum(Type enumType, object value, string name)
+        public static void ValidateEnum(Type enumType, object value, string name)
         {
             if (!Enum.IsDefined(enumType, value))
             {
@@ -38,7 +38,7 @@ namespace Freya.Utils
             }
         }
 
-        internal static void ValidatePositive(double value, string name)
+        public static void ValidatePositive(double value, string name)
         {
             if (value <= 0)
             {
@@ -46,7 +46,7 @@ namespace Freya.Utils
             }
         }
 
-        internal static void ValidateNotNegative(double value, string name)
+        public static void ValidateNotNegative(double value, string name)
         {
             if (value < 0)
             {
@@ -54,7 +54,7 @@ namespace Freya.Utils
             }
         }
 
-        internal static void ValidateWithinRange(double value, double min, double max, string name)
+        public static void ValidateWithinRange(double value, double min, double max, string name)
         {
             if (value < min || value > max)
             {
