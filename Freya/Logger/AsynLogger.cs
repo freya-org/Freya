@@ -24,7 +24,8 @@ namespace Freya.Logger
 {
     public class AsynLogger
     {
-        private AutoResetEvent reset = new AutoResetEvent(false);
+        private Thread _loggingThread;
+        private AutoResetEvent _reset = new AutoResetEvent(false);
         private static AsynLogger _instance;
         private static Queue<LogEntry> _logQueue;
         private static string _file;
@@ -55,13 +56,14 @@ namespace Freya.Logger
             {
                 if (_instance == null)
                 {
-                    return null;
+                    _instance = AsynLogger();
+                    return _instance;
                 }
                 return _instance;
             }
         }
 
-        private AsynLogger(string file, string format = "DateTime: {0} >> {1} >> {2}", int frequency = 1000)
+        public AsynLogger(string file = "logFile.txt", string format = "DateTime: {0} >> {1} >> {2}", int frequency = 1000)
         {
             _instance = new AsynLogger(file, format, frequency);
             _file = file;
@@ -69,9 +71,10 @@ namespace Freya.Logger
             _frequency = frequency;
             _logQueue = new Queue<LogEntry>();
 
-            Thread loggingThread = new Thread(new ThreadStart(ProcessQueue));
-            loggingThread.IsBackground = true;
-            loggingThread.Start();
+            // Thread
+            _loggingThread = new Thread(new ThreadStart(ProcessQueue));
+            _loggingThread.IsBackground = true;
+            _loggingThread.Start();
         }
 
         public void AddLog(LogEntry.LogType type, object value)
@@ -83,7 +86,7 @@ namespace Freya.Logger
         {
             while (true)
             {
-                reset.WaitOne(_frequency, true);
+                _reset.WaitOne(_frequency, true);
                 lock (_logQueue)
                 {
                     Flush(_logQueue);
