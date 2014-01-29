@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Freya.Utils;
 
 namespace Freya.Logger
 {
-    public class BaseLogger
+    public abstract class BaseLogger
     {
-        private List<LogEntry> _LogEntryList;
-        private string _file;
-        private string _format = "DateTime: {0} >> {1} >> {2}";
+        protected StreamWriter _writer;
+        protected List<LogEntry> _logEntryList;
+        protected string _file;
+        protected int _frequency;
+        protected string _format;
 
         public string File
         {
@@ -21,32 +24,36 @@ namespace Freya.Logger
             set { _format = value; }
         }
 
-        public BaseLogger(string file, string format = null)
+        public int Frequency
+        {
+            get { return _frequency; }
+            set { _frequency = value; }
+        }
+
+        public BaseLogger(string file, string format = "DateTime: {0} >> {1} >> {2}", int frequency = 1000)
         {
             _file = file;
-            if (format != null) _format = format;
-            _LogEntryList = new List<LogEntry>();
+            _format = format;
+            _frequency = frequency;
+            _logEntryList = new List<LogEntry>();
+            _writer = new StreamWriter(_file);
         }
 
-        public void Add(LogType type, object value)
+        public void AddLog(LogType type, object value)
         {
-            _LogEntryList.Add(new LogEntry { LogType = type, Value = value });
+            _logEntryList.Add(new LogEntry { LogType = type, Value = value });
         }
 
-        public bool FlushToFile()
+        public bool Flush(List<LogEntry> list)
         {
-            List<LogEntry> backup = new List<LogEntry>();
-            backup = _LogEntryList;
-            _LogEntryList.Clear();
-
             try
             {
-                using (StreamWriter writer = new StreamWriter(_file))
+                using (_writer)
                 {
-                    foreach (LogEntry entry in backup)
+                    foreach (LogEntry entry in list)
                     {
-                        writer.WriteLine(entry.Format, entry.DateTime, entry.LogType, entry.Value);
-                        backup.Remove(entry);
+                        _writer.WriteLine(entry.Format, entry.DateTime, entry.LogType, entry.Value);
+                        list.Remove(entry);
                     }
                     return true;
                 }
@@ -55,7 +62,6 @@ namespace Freya.Logger
             {
                 return false;
             }
-
         }
 
         public enum LogType
