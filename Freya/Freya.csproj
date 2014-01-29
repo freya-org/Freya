@@ -43,11 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FConsole.cs" />
-    <Compile Include="Logger\AsynLogger.cs" />
     <Compile Include="Logger\LogEntry.cs" />
     <Compile Include="Nhib\NhibExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Logger\BaseLogger.cs" />
+    <Compile Include="Logger\AsynLogger.cs" />
     <Compile Include="Utils\ListExt.cs" />
     <Compile Include="Utils\Parsers.cs" />
     <Compile Include="Utils\StopwatchUtil.cs" />
