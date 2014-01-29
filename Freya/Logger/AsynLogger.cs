@@ -79,7 +79,7 @@ namespace Freya.Logger
             _logQueue.Enqueue(new LogEntry { Type = type, Value = value });
         }
 
-        void ProcessQueue()
+        private void ProcessQueue()
         {
             while (true)
             {
