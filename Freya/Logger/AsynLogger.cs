@@ -56,7 +56,7 @@ namespace Freya.Logger
             {
                 if (_instance == null)
                 {
-                    _instance = AsynLogger();
+                    _instance = new AsynLogger();
                     return _instance;
                 }
                 return _instance;
