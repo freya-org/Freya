@@ -29,7 +29,7 @@ namespace Freya.Nhib
     public static class NhibExt
     {
         public static FluentMappingsContainer AddFromNamespaceOf<T>(
-        this FluentMappingsContainer fmc)
+            this FluentMappingsContainer fmc)
         {
             string ns = typeof(T).Namespace;
             IEnumerable<Type> types = typeof(T).Assembly.GetExportedTypes()
