@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace Freya.Utils
 {
-    public class ListExt
+    public static class ListExt
     {
         public static IList<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
         {
