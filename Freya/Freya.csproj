@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FConsole.cs" />
+    <Compile Include="FConsoleExt.cs" />
     <Compile Include="Logger\LogEntry.cs" />
     <Compile Include="Nhib\NhibExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
