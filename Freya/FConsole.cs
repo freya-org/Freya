@@ -18,6 +18,7 @@
 
 using System;
 using Freya.Utils;
+using System.Linq.Expressions;
 
 namespace Freya
 {
@@ -59,6 +60,11 @@ namespace Freya
         {
             Console.ForegroundColor = _fg;
             Console.BackgroundColor = _bg;
+        }
+
+        public static void WriteLine<T>(Expression<Func<T>> expression)
+        {
+            Console.WriteLine("{0}={1}", ((MemberExpression)expression.Body).Member.Name, expression.Compile()());
         }
 
         public enum FConsoleColor
