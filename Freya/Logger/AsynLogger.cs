@@ -16,99 +16,44 @@
  ***********************************************************************************************/
 
 
-using System.Collections.Generic;
 using System.IO;
-using System.Threading;
+using System.Reflection;
 
 namespace Freya.Logger
 {
     public class AsynLogger
     {
-        private Thread _loggingThread;
-        private AutoResetEvent _reset = new AutoResetEvent(false);
-        private static AsynLogger _instance;
-        private static Queue<LogEntry> _logQueue;
-        private static string _file;
-        private static int _frequency;
-        private static string _format;
+        private static string _file = "logFile.txt";
+        private static string _dirlog = "/";
 
-        public string File
+        public static string File
         {
             get { return _file; }
             set { _file = value; }
         }
-
-        public string Format
+        public static string Directory
         {
-            get { return _format; }
-            set { _format = value; }
+            get { return _dirlog; }
+            set { _dirlog = value; }
         }
 
-        public int Frequency
+        static AsynLogger()
         {
-            get { return _frequency; }
-            set { _frequency = value; }
+            _dirlog = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         }
 
-        public static AsynLogger getInstance
+        public static bool AddLog(LogEntry entry)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new AsynLogger();
-                    return _instance;
-                }
-                return _instance;
-            }
+            return Flush(entry);
         }
 
-        public AsynLogger(string file = "logFile.txt", string format = "DateTime: {0} >> {1} >> {2}", int frequency = 1000)
-        {
-            _instance = new AsynLogger(file, format, frequency);
-            _file = file;
-            _format = format;
-            _frequency = frequency;
-            _logQueue = new Queue<LogEntry>();
-
-            // Thread
-            _loggingThread = new Thread(new ThreadStart(ProcessQueue));
-            _loggingThread.IsBackground = true;
-            _loggingThread.Start();
-        }
-
-        public void AddLog(LogEntry.LogType type, object value)
-        {
-            _logQueue.Enqueue(new LogEntry { Type = type, Value = value });
-        }
-
-        private void ProcessQueue()
-        {
-            while (true)
-            {
-                _reset.WaitOne(_frequency, true);
-                lock (_logQueue)
-                {
-                    Flush(_logQueue);
-                }
-            }
-        }    
-
-        private bool Flush(Queue<LogEntry> logQueue)
+        private static bool Flush(LogEntry entry)
         {
             try
             {
-                while (logQueue.Count > 0)
+                using (StreamWriter _writer = new StreamWriter(System.IO.Path.Combine(_dirlog, _file), true))
                 {
-                    LogEntry entry = logQueue.Dequeue();
-
-                    using (FileStream fs = System.IO.File.Open(_file, FileMode.Append, FileAccess.Write))
-                    {
-                        using (StreamWriter _writer = new StreamWriter(_file))
-                        {
-                            _writer.WriteLine(entry.Format, entry.DateTime.ToString(), entry.Type, entry.Value);
-                        }
-                    }
+                    _writer.WriteLine(entry.Format, entry.DateTime.ToString(), entry.Type, entry.Value);
                 }
                 return true;
             }
