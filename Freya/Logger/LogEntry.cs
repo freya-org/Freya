@@ -33,6 +33,7 @@ namespace Freya.Logger
         public LogEntry()
         {
             dateTime = DateTime.Now;
+            format = "DateTime: {0} >> {1} >> {2}";
         }
 
         public string Format
